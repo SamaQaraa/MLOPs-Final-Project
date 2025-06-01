@@ -6,6 +6,11 @@ let arrow = null;
 async function onResults(results) {
   canvasCtx.save();
   canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+  
+  // Flip horizontally
+  canvasCtx.translate(canvasElement.width, 0);
+  canvasCtx.scale(-1, 1); // This mirrors the canvas
+  
   canvasCtx.drawImage(
     results.image,
     0,
