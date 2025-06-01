@@ -1,6 +1,6 @@
 async function getPredictedLabel(processed_t) {
   try {
-    const response = await fetch("http://localhost:8000/predict", {
+    const response = await fetch("https://uhivurgwswtr.eu-central-1.clawcloudrun.com/predict", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -20,7 +20,7 @@ async function getPredictedLabel(processed_t) {
     const gestureToDirection = {
       "like": "up",
       "dislike": "down",
-      "fist": "left",
+      "peace": "left",
       "one": "right"
     };
 
