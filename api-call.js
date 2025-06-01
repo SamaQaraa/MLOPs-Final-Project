@@ -1,12 +1,36 @@
 async function getPredictedLabel(processed_t) {
-  // TODO: Call your model's api here
-  // and return the predicted label
-  // Possible labels: "up", "down", "left", "right", null
-  // null means stop & wait for the next gesture
-  // For now, we will return a random label
-  const labels = ["up", "down", "left", "right"];
-  const randomIndex = Math.floor(Math.random() * labels.length);
-  const randomLabel = labels[randomIndex];
-  console.log("Predicted label:", randomLabel);
-  return randomLabel;
+  try {
+    const response = await fetch("http://localhost:8000/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ landmarks: processed_t })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    const gesture = result.gesture; // e.g., "Thumb_Up", "Swipe_Left"
+    console.log("Raw gesture:", gesture);
+
+    // Map gestures to direction labels
+    const gestureToDirection = {
+      "like": "up",
+      "dislike": "down",
+      "fist": "left",
+      "one": "right"
+    };
+
+    const directionLabel = gestureToDirection[gesture] || null;
+    console.log("Mapped label:", directionLabel);
+
+    return directionLabel;
+
+  } catch (error) {
+    console.error("Error while predicting label:", error);
+    return null;
+  }
 }
