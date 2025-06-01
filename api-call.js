@@ -20,7 +20,7 @@ async function getPredictedLabel(processed_t) {
     const gestureToDirection = {
       "like": "up",
       "dislike": "down",
-      "peace": "left",
+      "stop": "left",
       "one": "right"
     };
 
